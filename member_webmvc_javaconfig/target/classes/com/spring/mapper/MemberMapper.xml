@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring.mapper.MemberMapper">
+
+	<select id="getPass" resultType="java.lang.String">
+		select password from membertbl where userid=#{userId}
+	</select>
+	
+	<select id="login" resultType="com.spring.domain.AuthDTO">
+		select userid, name from membertbl where userid=#{userId}
+	</select>
+
+	<select id="dupId" resultType="java.lang.Integer"> <!-- count(*)를 Integer타입으로 받음 -->
+		select count(*) name from membertbl where userid=#{userId}
+	</select>
+	
+	<insert id="insert">
+		insert into membertbl(userId,password,name,gender,email) values(#{userId},#{password},#{name},#{gender},#{email})
+	</insert>
+	
+	<delete id="leave">
+		delete from membertbl where userid=#{userId}
+	</delete>
+	
+	<update id="update">
+		update membertbl set password=#{newpassword} where userId=#{userId}
+	</update>
+</mapper>

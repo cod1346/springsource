@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring.mapper.MemberMapper">
+	<insert id="insert">
+		insert into membertbl(userId,password,name,gender,email) values(#{userId},#{password},#{name},#{gender},#{email})
+	</insert>
+	<delete id="delete">
+		delete membertbl where userId=#{userId} and password=#{password}
+	</delete>
+	<update id="update">
+		update membertbl set email=#{email} where userId=#{userId} and password=#{password}
+	</update>
+	<select id="getRow" resultType="com.spring.domain.MemberDTO">
+		select * from membertbl where userId=#{userId} and password=#{password}
+	</select>
+	<select id="getRows" resultType="com.spring.domain.MemberDTO">
+		select userId,name,email from membertbl
+	</select>
+</mapper>

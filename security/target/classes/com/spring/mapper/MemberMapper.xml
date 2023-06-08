@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring.mapper.MemberMapper">
+	
+	<!-- 회원가입 -->
+	<insert id="register">
+		insert into sp_user(userid,email,password) values(#{userId},#{email},#{password})	
+	</insert>
+	<insert id="registerAuth">
+		insert into sp_user_authority(userid,authority) values(#{userId},#{authority})
+	</insert>
+	
+	<!-- 회원조회 : 로그인 -->
+	<resultMap type="com.spring.domain.SpUserDTO" id="spUser">
+		<id property="userId" column="userId"/>
+		<result property="email" column="email"/>
+		<result property="password" column="password"/>
+		<result property="enabled" column="enabled"/>
+		<collection property="authorites" resultMap="authorites"/>
+	</resultMap>
+	
+	<resultMap type="com.spring.domain.SpUserAuthorityDTO" id="authorites">
+		<result property="userId" column="userId"/>
+		<result property="authority" column="authority"/>
+	</resultMap>
+	
+	<select id="read" resultMap="spUser">
+	select s1.userid, email, password, enabled, authority
+	from sp_user s1 LEFT OUTER JOIN sp_user_authority s2 ON s1.userid = s2.userid
+	where s1.userid=#{userId}
+    
+	</select>
+	
+</mapper>
